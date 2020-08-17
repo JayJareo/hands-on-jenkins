@@ -17,6 +17,7 @@ pipeline {
 			steps {
 				sh 'echo $HOME'
 				withEnv(["HOME=${env.WORKSPACE}/section_4/code/cd_pipeline"]) {
+					sh 'echo $HOME'
 					runUnittests()
 				}
 			}
@@ -77,6 +78,7 @@ def deploy(environment) {
 
 
 def runUnittests() {
+	sh 'echo $HOME'
 	sh "pip3 install --no-cache-dir -r ./section_4/code/cd_pipeline/requirements.txt"
 	sh "python3 section_4/code/cd_pipeline/tests/test_flask_app.py"
 }
