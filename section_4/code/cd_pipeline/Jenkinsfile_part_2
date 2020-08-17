@@ -14,7 +14,8 @@ pipeline {
 	stages {
 
 		stage("Test - Unit tests") {
-			steps { 
+			steps {
+				sh 'echo $HOME'
 				withEnv(["HOME=${env.WORKSPACE}/section_4/code/cd_pipeline"]) {
 					runUnittests()
 				}
