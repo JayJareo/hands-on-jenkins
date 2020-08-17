@@ -15,6 +15,11 @@ pipeline {
 
 		stage("Test - Unit tests") {
 			steps {
+				PATH=$WORKSPACE/venv/bin:/usr/local/bin:$PATH
+				if [ ! -d "venv" ]; then
+        				virtualenv venv
+				fi
+				. venv/bin/activate
 				sh 'echo $HOME'
 				withEnv(["HOME=${env.WORKSPACE}/section_4/code/cd_pipeline"]) {
 					sh 'echo $HOME'
@@ -79,7 +84,8 @@ def deploy(environment) {
 
 def runUnittests() {
 	sh 'echo $HOME'
-	sh "pip3 install --no-cache-dir -r ./section_4/code/cd_pipeline/requirements.txt"
+	sh "pip install -r requirements.txt --download-cache=/tmp/$JOB_NAME"
+//	sh "pip3 install --no-cache-dir -r ./section_4/code/cd_pipeline/requirements.txt"
 	sh "python3 section_4/code/cd_pipeline/tests/test_flask_app.py"
 }
 
